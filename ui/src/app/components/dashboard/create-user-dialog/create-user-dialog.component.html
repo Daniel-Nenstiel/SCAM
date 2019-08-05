@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Create User Dialog</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ng-template [ngIf]="alertMessage">
+                <alert [type]="alertType">{{ alertMessage }}</alert>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row">
+        <form [formGroup]="userForm" class="form-horizontal">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="Username" formControlName="username">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" formControlName="password"
+                            [type]="passwordHide ? 'password' : 'text'">
+                        <mat-icon matSuffix (click)="passwordHide = !passwordHide">
+                            {{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Arbitrary Number</mat-label>
+                        <input matInput placeholder="Arbitrary Number" formControlName="arbitrary-num">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <form [formGroup]="profileForm" class="form-horizontal">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" formControlName="first-name">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name" formControlName="last-name">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="onClickSubmit()" [disabled]="disableSubmit">Submit</button>
+        </div>
+        <div class="col">
+            <button mat-raised-button (click)="onClickClose()">Close</button>
+        </div>
+    </div>
+</div>

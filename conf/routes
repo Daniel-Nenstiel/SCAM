@@ -1,0 +1,24 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /v1/g/test                 controllers.GeneralController.getTest()
+
+GET     /v1/g/:table/:name/:value  controllers.GeneralController.get(table, name, value)
+GET     /v1/g/:table               controllers.GeneralController.getMultiple(table)
+
+POST    /v1/g/:table               controllers.GeneralController.post(table)
+
+#PUT     /v1/g/:table               controllers.GeneralController.put(table)
+
+# An example route (Prefix all API routes with apiPrefix defined in application.conf)
+GET     /v1/summary                controllers.HomeController.appSummary
+
+# Serve static assets under public directory
+GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+
+# Test post request
+POST    /v1/postTest               controllers.HomeController.postTest()
+
+# Serve index page from public directory
+GET     /                           controllers.FrontendController.index()

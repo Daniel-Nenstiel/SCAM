@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ng-template [ngIf]="alertMessage">
+        <alert [type]="alertType">{{ alertMessage }}</alert>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <div class="row">
+        <div class="col">
+          <button mat-raised-button (click)="getAllButton()">Update Table</button>
+        </div>
+        <div class="col">
+          <button mat-raised-button color="accent" (click)="onClickCreate()">Create User</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="col">
+            <button mat-raised-button (click)="getButton()">get User</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-9">
+      <ngx-datatable
+      class="bootstrap"
+      [rows]="rows"
+      [columns]="columns"
+      [columnMode]="'force'"
+      ></ngx-datatable>
+    </div>
+  </div>
+</div>
+  

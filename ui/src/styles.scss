@@ -1,0 +1,153 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@include mat-core();
+
+$scam-red: (
+    50: crimson
+);
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+
+//Custom Theme Colors for Frontage
+/**
+  Primary color: Dark Cerulean: #00467F
+  Secondary color: Verdigris: #3DAEB6
+  Warn Color: Vivid Red-Tangelo #D56126
+  Other Colors: 
+    Light Sea Green: #23B1A5
+    Yellow Green: #8EB530
+    Pastel Brown: #7D6A55
+    Grullo: #A2968A
+**/
+
+$frontage-dark-cerulean: (
+  50: #E0E9F0,
+  100: #B3C8D9,
+  200: #80A3BF,
+  300: #4D7EA5,
+  400: #266292,
+  500: #00467F, //Dark Cerulean - Primary Color
+  600: #003F77,
+  700: #00376C,
+  800: #002F62,
+  900: #00204F,
+  A100: #82A8FF,
+  A200: #4F84FF,
+  A400: #1C60FF,
+  A700: #034FFF,
+  contrast: (
+    50: rgba(0, 0, 0, 0.55),
+    100: rgba(0, 0, 0, 0.59),
+    200: rgba(0, 0, 0, 0.66),
+    300: rgba(0, 0, 0, 0.59),
+    400: rgba(0, 0, 0, 0.90),
+    500: rgba(255, 255, 255, 1.00),
+    600: rgba(255, 255, 255, 0.57),
+    700: rgba(255, 255, 255, 0.54),
+    800: rgba(255, 255, 255, 0.52),
+    900: rgba(255, 255, 255, 0.48),
+    A100: rgba(0, 0, 0, 0.63),
+    A200: rgba(0, 0, 0, 0.74),
+    A400: rgba(255, 255, 255, 0.92),
+    A700: rgba(255, 255, 255, 0.84),
+  )
+);
+
+$frontage-verdigris: (
+  50: #E8F5F6,
+  100: #C5E7E9,
+  200: #9ED7DB,
+  300: #77C6CC,
+  400: #5ABAC1,
+  500: #3DAEB6, //Verdigris - Secondary Color
+  600: #37A7AF,
+  700: #2F9DA6,
+  800: #27949E,
+  900: #1A848E,
+  A100: #C6FAFF,
+  A200: #93F5FF,
+  A400: #60F0FF,
+  A700: #47EDFF,
+  contrast: (
+    50: rgba(255, 255, 255, 0.55),
+    100: rgba(0, 0, 0, 0.55),
+    200: rgba(0, 0, 0, 0.58),
+    300: rgba(0, 0, 0, 0.60),
+    400: rgba(0, 0, 0, 0.63),
+    500: rgba(0, 0, 0, 1.00), 
+    600: rgba(0, 0, 0, 0.68),
+    700: rgba(0, 0, 0, 0.71),
+    800: rgba(0, 0, 0, 0.76),
+    900: rgba(0, 0, 0, 0.93),
+    A100: rgba(0, 0, 0, 0.55),
+    A200: rgba(0, 0, 0, 0.55),
+    A400: rgba(0, 0, 0, 0.56),
+    A700: rgba(0, 0, 0, 0.56),
+  )
+);
+
+$frontage-vivid-red-tangelo: (
+  50: #FAECE5,
+  100: #F2D0BE,
+  200: #EAB093,
+  300: #E29067,
+  400: #DB7947,
+  500: #D56126, //Vivid Red-Tangelo - Warm Color
+  600: #D05922,
+  700: #CA4F1C,
+  800: #C44517,
+  900: #BA330D,
+  A100: #FFEBE7,
+  A200: #FFC2B4,
+  A400: #FF9881,
+  A700: #FF8368,
+  contrast: (
+    50: rgba(0, 0, 0, 0.55),
+    100: rgba(0, 0, 0, 0.57),
+    200: rgba(0, 0, 0, 0.59),
+    300: rgba(0, 0, 0, 0.64),
+    400: rgba(0, 0, 0, 0.70),
+    500: rgba(0, 0, 0, 0.78),
+    600: rgba(0, 0, 0, 0.84),
+    700: rgba(0, 0, 0, 0.95),
+    800: rgba(255, 255, 255, 0.93),
+    900: rgba(255, 255, 255, 0.94),
+    A100: rgba(0, 0, 0, 0.55),
+    A200: rgba(0, 0, 0, 0.57),
+    A400: rgba(0, 0, 0, 0.61),
+    A700: rgba(0, 0, 0, 0.63),
+  )
+);
+
+// Define the default theme
+$portal-app-primary:   mat-palette($frontage-dark-cerulean);
+$portal-app-accent:  mat-palette($frontage-verdigris);
+$portal-app-warn: mat-palette($frontage-vivid-red-tangelo);
+$portal-app-theme:   mat-light-theme($portal-app-primary, $portal-app-accent, $portal-app-warn);
+
+// Include the default theme styles.
+@include angular-material-theme($portal-app-theme);
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-blue);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.unicorn-dark-theme {
+  @include angular-material-theme($dark-theme);
+}
