@@ -30,7 +30,7 @@ offset and limit default to 0 (limit of 0 is no limit)
 
 ```
 ****** Offset and limit not implemented yet
-GET /v1/g/*table*/?offset=#&limit=# controllers.GeneralController.getMultiple(offset: number, limit: number)
+GET /v1/g/*table*/?offset=#&limit=# controllers.GeneralController.getMultiple(table: string, offset: number, limit: number)
 
 offset and limit default to 0 (limit of 0 is no limit)
 ```
