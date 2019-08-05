@@ -46,21 +46,25 @@ class GeneralController @Inject()(
     )
   }
 
-  def get( table: String, name: String, value: String ) = Action.async { 
+  def get(
+    table: String, name: String, value: String,
+    offset: Int = 0, limit: Int = 0
+    ) = Action.async { implicit request =>
+
     def newCollection: Future[JSONCollection] = database.map(
     _.collection[JSONCollection](table))
-    
+
+    var query = Json.obj(name -> value)
+    if(isNumeric(value)){
+      query = query.as[JsObject] - name 
+      query = Json.obj(name -> value.toInt )
+    }
+
     // Do query
     val cursor: Future[Cursor[JsObject]] = newCollection.map {
       //Find from 'table' where name = value check if value is a number
-      if(isNumeric(value)){
-        _.find(Json.obj(name -> value.toInt)).
-        cursor[JsObject]()        
-      }
-      else{
-        _.find(Json.obj(name -> value)).
-        cursor[JsObject]()
-      }
+      _.find(query).
+      cursor[JsObject]()
     }
 
     // Get objects in a list
@@ -69,7 +73,20 @@ class GeneralController @Inject()(
 
     // Make list into array
     val futureArray: Future[JsArray] = 
-      futureList.map { list => Json.arr(list) }
+      futureList.map { list => 
+      if( offset == 0 && limit == 0 ) {
+        Json.arr(list) 
+      }
+      else if( offset == 0 ) {
+        Json.arr(list.take(limit))
+      }
+      else if( limit == 0 ) {
+        Json.arr(list.drop(offset))
+      }
+      else {
+        Json.arr(list.drop(offset).take(limit))
+      }
+    }
 
     // Return array
     futureArray.map { list => 
@@ -77,7 +94,10 @@ class GeneralController @Inject()(
     }
   }
 
-  def getMultiple( table: String ) = Action.async {
+  def getMultiple( 
+    table: String,
+    offset: Int = 0, limit: Int = 0 
+    ) = Action.async {
     def newCollection: Future[JSONCollection] = database.map(
     _.collection[JSONCollection](table))
 
@@ -93,11 +113,24 @@ class GeneralController @Inject()(
 
     // Make list into array
     val futureArray: Future[JsArray] = 
-      futureList.map { list => Json.arr(list) }
+      futureList.map { list => 
+      if( offset == 0 && limit == 0 ) {
+        Json.arr(list) 
+      }
+      else if( offset == 0 ) {
+        Json.arr(list.take(limit))
+      }
+      else if( limit == 0 ) {
+        Json.arr(list.drop(offset))
+      }
+      else {
+        Json.arr(list.drop(offset).take(limit))
+      }
+    } 
 
     // Return array
-    futureArray.map { list => 
-      Ok(list)
+    futureArray.map { arr => 
+      Ok(arr)
     }
   }
 
@@ -134,6 +167,26 @@ class GeneralController @Inject()(
   def containsDate( str: String): Boolean = {
     str contains "date"
   }
+
+/* Not used right now
+request.queryString.map { case (k,v) => k -> v.mkString }
+*/
+  def buildQuery( queryMap: Map[String, String] ) = {
+    if( queryMap isEmpty ) { println("empty") }
+    else {
+      var jsonQuery = Json.obj("placeholder" -> JsNull)
+      queryMap foreach{ 
+        case ("offset", value)  => 
+          jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("offset" -> value.toInt)
+        case ("limit", value)   => 
+          jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("limit" -> value.toInt)
+        case ("checksum", value)   => 
+          jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("checksum" -> value.toInt)
+        case ("lock", value)   => 
+          jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("lock" -> value.toInt)
+        case ("force_null", value)   => 
+          jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("force_null" -> value.toInt)
+      }
+    }
+  }
 }
-
-

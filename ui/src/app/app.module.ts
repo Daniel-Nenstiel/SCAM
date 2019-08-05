@@ -6,7 +6,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angu
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
-import { RouteExampleComponent } from './route-example/route-example.component';
 
 import { AppService } from './app.service';
 import { AppHttpInterceptorService } from './http-interceptor.service';
@@ -20,12 +19,9 @@ import { CreateUserDialogComponent } from './components/dashboard/create-user-di
   declarations: [
     AppComponent,
     DashboardComponent,
-    RouteExampleComponent,
     CreateUserDialogComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     NgxDatatableModule,
     HttpClientModule,
     CustomMaterialModule,

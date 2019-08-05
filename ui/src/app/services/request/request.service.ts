@@ -9,7 +9,6 @@ import { RequestData } from 'src/app/models/request-data.model';
 import { Endpoints } from 'src/app/helpers/endpoints';
 import { User } from 'src/app/models/user.model';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,13 +34,8 @@ export class RequestService extends BaseRequestService {
      return super.post(req);
    }
 
-  readSomething(endpoint: string): Observable<any>{
-    const req = new RequestData();
-    req.params = new Map([
-      [endpoint, null],
-    ])
-
-    return super.get(req);
+  readSomething(reqDat: RequestData): Observable<any>{
+    return super.get(reqDat);
   }
 
   readUsersByUsername(username: string) {

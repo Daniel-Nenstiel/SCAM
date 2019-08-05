@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { RequestService } from '../../services/request/request.service'
 import { WorkerService } from 'src/app/services/worker/worker.service';
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
+import { RequestData } from 'src/app/models/request-data.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,8 +18,11 @@ export class DashboardComponent implements OnInit {
 
   conTest;
 
-  columns
-  rows
+  activeColumns;
+  activeRows;
+
+  inactiveColumns;
+  inactiveRows;
 
   getButtonData;
   getAllButtonData;
@@ -31,7 +35,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initTable();
+    this.initActiveTable();
+    this.initInactiveTable();
     this.initTest();
   }
 
@@ -46,24 +51,27 @@ export class DashboardComponent implements OnInit {
     this.alertMessage = 'Attempting connection';
     this.request.getTest().subscribe({
       next: (response)=> {
-        // console.log(response);
         this.alertType = 'success';
         this.alertMessage = 'Connection made';
       },
       error: (err)=> {
-        console.log(err);
         this.alertType = 'danger';
         this.alertMessage = 'Connection denied'
       }
     })
   }
 
-  initTable() {
-    this.columns = this.initColumns();
-    this.rows = this.initRows();
+  initActiveTable() {
+    this.activeColumns = this.initActiveColumns();
+    this.activeRows = this.initActiveRows();
   }
 
-  initColumns() {
+  initInactiveTable() {
+    this.inactiveColumns = this.initInactiveColumns();
+    this.inactiveRows = this.initInactiveRows();
+  }
+
+  initActiveColumns() {
     return [
       {name: 'ID', prop: '_id.$oid'},
       {name: 'Username', prop: 'username'},
@@ -71,41 +79,63 @@ export class DashboardComponent implements OnInit {
       {name: 'Date Created', prop: 'date-created'},
       {name: 'Arbitrary Num', prop: 'arbitrary-num'},
       {name: 'Status', prop: 'status'},
-
     ]
   }
 
-  initRows() {
-    return [];
+  initInactiveColumns() {
+    return [
+      {name: 'ID', prop: '_id.$oid'},
+      {name: 'Username', prop: 'username'},
+      {name: 'Password', prop: 'password'},
+      {name: 'Date Created', prop: 'date-created'},
+      {name: 'Arbitrary Num', prop: 'arbitrary-num'},
+      {name: 'Status', prop: 'status'},
+    ]
   }
 
-  postButton(){
-    this.request.readSomething('g/users/status/1').subscribe( post => {
-      post = this.worker.convertFromDatabase(post[0][post[0].length-1])
-      post.arbitraryNum ++
-      delete post._id
-      
-      this.request.createSomething({'g':'users'}, this.worker.convertToDatabase(post)).subscribe( response => {
-        console.log(response);
-      })
-    });
-  }
-
-  getButton() {
-    this.request.readUsersByUsername('dnenstiel1').subscribe( data => {
-      console.log(data);
-    })
-  }
-
-  getAllButton() {
+  initActiveRows() {
+    this.activeRows = [];
     this.request.readUsers().subscribe(users => {
-      console.log(users);
       users[0].forEach(user => {
         if(user['date-created'].hasOwnProperty('$date')){
           user['date-created'] = new Date(user['date-created']['$date']);
         }        
       });
-      this.rows = users[0];
+      this.activeRows = users[0];
+    })
+  }
+
+  initInactiveRows() {
+    this.inactiveRows = [];
+    let req = new RequestData();
+    req.table = {'g':'users'}
+    req.params = new Map([
+      ['status/0', null]
+    ])
+    this.request.readSomething(req).subscribe(users => {
+      users[0].forEach(user => {
+        if(user['date-created'].hasOwnProperty('$date')){
+          user['date-created'] = new Date(user['date-created']['$date']);
+        }        
+      });
+      this.inactiveRows = users[0];
+    })
+  }
+
+  updateTables() {
+    this.initActiveTable();
+    this.initInactiveTable();
+  }
+
+  getButton() {
+    let req = new RequestData();
+    req.table = {'g':'users'}
+    req.params = new Map([
+      ['status/0', null]
+    ])
+    req.query = {'offset': 0}
+    this.request.readSomething(req).subscribe( something => {
+      console.log(something);
     })
   }
 

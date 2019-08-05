@@ -10,7 +10,7 @@
     <div class="col-3">
       <div class="row">
         <div class="col">
-          <button mat-raised-button (click)="getAllButton()">Update Table</button>
+          <button mat-raised-button color="warn" (click)="updateTables()">Update Table</button>
         </div>
         <div class="col">
           <button mat-raised-button color="accent" (click)="onClickCreate()">Create User</button>
@@ -19,19 +19,30 @@
       <div class="row">
         <div class="col">
           <div class="col">
-            <button mat-raised-button (click)="getButton()">get User</button>
+            <button mat-raised-button color="primary" (click)="getButton()">get User</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-9">
-      <ngx-datatable
-      class="bootstrap"
-      [rows]="rows"
-      [columns]="columns"
-      [columnMode]="'force'"
-      ></ngx-datatable>
+      <mat-tab-group mat-align-tabs="center">
+        <mat-tab label='Active Users'>
+          <ngx-datatable
+          class="bootstrap"
+          [rows]="activeRows"
+          [columns]="activeColumns"
+          [columnMode]="'force'"
+          ></ngx-datatable>
+        </mat-tab>
+        <mat-tab label="Inactive Users">
+          <ngx-datatable
+          class="bootstrap"
+          [rows]="inactiveRows"
+          [columns]="inactiveColumns"
+          [columnMode]="'force'"
+          ></ngx-datatable>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>
-  
