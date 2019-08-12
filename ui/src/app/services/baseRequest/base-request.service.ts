@@ -52,6 +52,19 @@ export abstract class BaseRequestService {
     )
   }
 
+  protected put<T>(req: RequestData): Observable<any> {
+    this.requestData = req;
+
+    if(!this.requestData.hasOwnProperty('body')) this.error.missingData();
+    else {
+      return this.http.put(
+        this.buildURL(), 
+        this.requestData.body,
+        { headers: this.defaultHeaders }
+      )
+    }
+  }
+
   private buildURL() {
     let fullURL = BaseRequestService.api_URL;
     fullURL += '/' + Object.keys(this.requestData.table)[0] + '/' + this.requestData.table[Object.keys(this.requestData.table)[0]]

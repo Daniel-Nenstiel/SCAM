@@ -147,8 +147,19 @@ class GeneralController @Inject()(
     Created(Json.obj("message" -> "Document insert Success"))
   }
 
-  def put( table: String ) = Action(parse.json) { request => 
-    Ok(Json.obj("message"-> "made it"))
+  def put( table: String, id: String ) = Action(parse.json) { request => 
+    def newCollection: Future[JSONCollection] = database.map(
+    _.collection[JSONCollection](table))
+    
+    var reqBody = convertDates(request.body.as[JsObject])
+    
+    val selector = Json.obj("_id" -> Json.obj("$oid" -> id))
+
+    newCollection.flatMap(_.update( selector , reqBody).map { lastError =>
+      Logger.debug(s"Successfully inserted with LastError: $lastError")
+    })
+
+    Ok(Json.obj("Updated"-> "Object created properly"))
   }
 
   def isNumeric(input: String): Boolean = input.forall(_.isDigit)
@@ -159,7 +170,6 @@ class GeneralController @Inject()(
     dateKeys.foreach( key => {
       obj2 = obj2.as[JsObject] - key
       obj2 = obj2.as[JsObject] + (key -> Json.obj("$date" -> (obj \ key).get ))
-      println(Json.prettyPrint(obj2))
     })
     return obj2
   }

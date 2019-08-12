@@ -5,6 +5,7 @@ import { RequestService } from '../../services/request/request.service'
 import { WorkerService } from 'src/app/services/worker/worker.service';
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 import { RequestData } from 'src/app/models/request-data.model';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -97,7 +98,7 @@ export class DashboardComponent implements OnInit {
     this.activeRows = [];
     this.request.readUsers().subscribe(users => {
       users[0].forEach(user => {
-        if(user['date-created'].hasOwnProperty('$date')){
+        if( user.hasOwnProperty('date-created') && user['date-created'].hasOwnProperty('$date') ){
           user['date-created'] = new Date(user['date-created']['$date']);
         }        
       });
@@ -114,7 +115,7 @@ export class DashboardComponent implements OnInit {
     ])
     this.request.readSomething(req).subscribe(users => {
       users[0].forEach(user => {
-        if(user['date-created'].hasOwnProperty('$date')){
+        if(user.hasOwnProperty('date-created') && user['date-created'].hasOwnProperty('$date')){
           user['date-created'] = new Date(user['date-created']['$date']);
         }        
       });
@@ -144,6 +145,23 @@ export class DashboardComponent implements OnInit {
     .afterClosed().subscribe({
       next: () => {
         console.log('closed the dialog');
+      }
+    })
+  }
+
+  updateFirst() {
+    let updateRow = JSON.parse(JSON.stringify(this.activeRows[0]));
+    updateRow['date-created'] = (new Date(updateRow['date-created'])).valueOf();
+    updateRow['arbitrary-num']++
+    let req = new RequestData();
+    req.table = ({'g':'users'});
+    req.body = updateRow;
+    req.params = new Map([[updateRow['_id']['$oid'], null]])
+
+    this.request.updateSomething(req).subscribe({
+      next: response => {
+        console.log(response);
+        this.initActiveTable();
       }
     })
   }

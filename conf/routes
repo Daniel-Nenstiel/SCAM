@@ -9,4 +9,4 @@ GET     /v1/g/:table               controllers.GeneralController.getMultiple(tab
 
 POST    /v1/g/:table               controllers.GeneralController.post(table)
 
-#PUT    /v1/g/:table               controllers.GeneralController.put(table)
+PUT     /v1/g/:table/:id                controllers.GeneralController.put(table, id)

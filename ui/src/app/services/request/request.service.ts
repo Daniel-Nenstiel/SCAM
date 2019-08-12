@@ -35,7 +35,7 @@ export class RequestService extends BaseRequestService {
    }
 
   readSomething(reqDat: RequestData): Observable<any>{
-    return super.get(reqDat);
+    return super.get<any>(reqDat);
   }
 
   readUsersByUsername(username: string) {
@@ -59,7 +59,7 @@ export class RequestService extends BaseRequestService {
 
   }
 
-  updateNothing(){
-    // return super.put()
+  updateSomething(reqDat: RequestData){
+    return super.put<any>(reqDat);
   }
 }

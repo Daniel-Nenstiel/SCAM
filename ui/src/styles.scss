@@ -9,10 +9,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @include mat-core();
 
-$scam-red: (
-    50: crimson
-);
-
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -31,110 +27,112 @@ $scam-red: (
     Grullo: #A2968A
 **/
 
-$frontage-dark-cerulean: (
-  50: #E0E9F0,
-  100: #B3C8D9,
-  200: #80A3BF,
-  300: #4D7EA5,
-  400: #266292,
-  500: #00467F, //Dark Cerulean - Primary Color
-  600: #003F77,
-  700: #00376C,
-  800: #002F62,
-  900: #00204F,
-  A100: #82A8FF,
-  A200: #4F84FF,
-  A400: #1C60FF,
-  A700: #034FFF,
-  contrast: (
-    50: rgba(0, 0, 0, 0.55),
-    100: rgba(0, 0, 0, 0.59),
-    200: rgba(0, 0, 0, 0.66),
-    300: rgba(0, 0, 0, 0.59),
-    400: rgba(0, 0, 0, 0.90),
-    500: rgba(255, 255, 255, 1.00),
-    600: rgba(255, 255, 255, 0.57),
-    700: rgba(255, 255, 255, 0.54),
-    800: rgba(255, 255, 255, 0.52),
-    900: rgba(255, 255, 255, 0.48),
-    A100: rgba(0, 0, 0, 0.63),
-    A200: rgba(0, 0, 0, 0.74),
-    A400: rgba(255, 255, 255, 0.92),
-    A700: rgba(255, 255, 255, 0.84),
-  )
+$scam-blue: (
+    50 : #e2eaf2,
+    100 : #b6cbdf,
+    200 : #85a9ca,
+    300 : #5487b4,
+    400 : #306da4,
+    500 : #0b5394,
+    600 : #0a4c8c,
+    700 : #084281,
+    800 : #063977,
+    900 : #032965,
+    A100 : #95b6ff,
+    A200 : #6294ff,
+    A400 : #2f71ff,
+    A700 : #155fff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
 );
 
-$frontage-verdigris: (
-  50: #E8F5F6,
-  100: #C5E7E9,
-  200: #9ED7DB,
-  300: #77C6CC,
-  400: #5ABAC1,
-  500: #3DAEB6, //Verdigris - Secondary Color
-  600: #37A7AF,
-  700: #2F9DA6,
-  800: #27949E,
-  900: #1A848E,
-  A100: #C6FAFF,
-  A200: #93F5FF,
-  A400: #60F0FF,
-  A700: #47EDFF,
-  contrast: (
-    50: rgba(255, 255, 255, 0.55),
-    100: rgba(0, 0, 0, 0.55),
-    200: rgba(0, 0, 0, 0.58),
-    300: rgba(0, 0, 0, 0.60),
-    400: rgba(0, 0, 0, 0.63),
-    500: rgba(0, 0, 0, 1.00), 
-    600: rgba(0, 0, 0, 0.68),
-    700: rgba(0, 0, 0, 0.71),
-    800: rgba(0, 0, 0, 0.76),
-    900: rgba(0, 0, 0, 0.93),
-    A100: rgba(0, 0, 0, 0.55),
-    A200: rgba(0, 0, 0, 0.55),
-    A400: rgba(0, 0, 0, 0.56),
-    A700: rgba(0, 0, 0, 0.56),
-  )
+$scam-grey: (
+    50 : #e7e8e8,
+    100 : #c3c5c5,
+    200 : #9b9e9f,
+    300 : #737778,
+    400 : #555a5b,
+    500 : #373d3e,
+    600 : #313738,
+    700 : #2a2f30,
+    800 : #232728,
+    900 : #161a1b,
+    A100 : #6ad4f8,
+    A200 : #39c6f6,
+    A400 : #00bdfc,
+    A700 : #00aae2,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
 );
 
-$frontage-vivid-red-tangelo: (
-  50: #FAECE5,
-  100: #F2D0BE,
-  200: #EAB093,
-  300: #E29067,
-  400: #DB7947,
-  500: #D56126, //Vivid Red-Tangelo - Warm Color
-  600: #D05922,
-  700: #CA4F1C,
-  800: #C44517,
-  900: #BA330D,
-  A100: #FFEBE7,
-  A200: #FFC2B4,
-  A400: #FF9881,
-  A700: #FF8368,
-  contrast: (
-    50: rgba(0, 0, 0, 0.55),
-    100: rgba(0, 0, 0, 0.57),
-    200: rgba(0, 0, 0, 0.59),
-    300: rgba(0, 0, 0, 0.64),
-    400: rgba(0, 0, 0, 0.70),
-    500: rgba(0, 0, 0, 0.78),
-    600: rgba(0, 0, 0, 0.84),
-    700: rgba(0, 0, 0, 0.95),
-    800: rgba(255, 255, 255, 0.93),
-    900: rgba(255, 255, 255, 0.94),
-    A100: rgba(0, 0, 0, 0.55),
-    A200: rgba(0, 0, 0, 0.57),
-    A400: rgba(0, 0, 0, 0.61),
-    A700: rgba(0, 0, 0, 0.63),
-  )
+
+
+$scam-red: (
+    50 : #ede0e0,
+    100 : #d1b3b3,
+    200 : #b38080,
+    300 : #944d4d,
+    400 : #7d2626,
+    500 : #660000,
+    600 : #5e0000,
+    700 : #530000,
+    800 : #490000,
+    900 : #380000,
+    A100 : #ff6e6e,
+    A200 : #ff3b3b,
+    A400 : #ff0808,
+    A700 : #ee0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
 );
 
 // Define the default theme
-$portal-app-primary:   mat-palette($frontage-dark-cerulean);
-$portal-app-accent:  mat-palette($frontage-verdigris);
-$portal-app-warn: mat-palette($frontage-vivid-red-tangelo);
-$portal-app-theme:   mat-light-theme($portal-app-primary, $portal-app-accent, $portal-app-warn);
+$app-primary:   mat-palette($scam-grey);
+$app-accent:  mat-palette($scam-blue);
+$app-warn: mat-palette($scam-red);
+$portal-app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
 
 // Include the default theme styles.
 @include angular-material-theme($portal-app-theme);

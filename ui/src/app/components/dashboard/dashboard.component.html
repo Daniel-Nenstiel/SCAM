@@ -18,29 +18,22 @@
       </div>
       <div class="row">
         <div class="col">
-          <div class="col">
-            <button mat-raised-button color="primary" (click)="getButton()">get User</button>
-          </div>
+          <button mat-raised-button color="primary" (click)="getButton()">get User</button>
+        </div>
+        <div class="col">
+          <button mat-raised-button color="warn" (click)="updateFirst()">update First</button>
         </div>
       </div>
     </div>
     <div class="col-9">
       <mat-tab-group mat-align-tabs="center">
         <mat-tab label='Active Users'>
-          <ngx-datatable
-          class="bootstrap"
-          [rows]="activeRows"
-          [columns]="activeColumns"
-          [columnMode]="'force'"
-          ></ngx-datatable>
+          <ngx-datatable class="bootstrap" [rows]="activeRows" [columns]="activeColumns" [columnMode]="'force'">
+          </ngx-datatable>
         </mat-tab>
         <mat-tab label="Inactive Users">
-          <ngx-datatable
-          class="bootstrap"
-          [rows]="inactiveRows"
-          [columns]="inactiveColumns"
-          [columnMode]="'force'"
-          ></ngx-datatable>
+          <ngx-datatable class="bootstrap" [rows]="inactiveRows" [columns]="inactiveColumns" [columnMode]="'force'">
+          </ngx-datatable>
         </mat-tab>
       </mat-tab-group>
     </div>
