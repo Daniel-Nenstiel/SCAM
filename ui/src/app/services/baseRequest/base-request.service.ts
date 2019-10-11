@@ -82,29 +82,29 @@ export abstract class BaseRequestService {
     let query = new HttpParams();
 
     if(this.requestData.query){
-      if(this.requestData.query.offset) {
+      if(this.requestData.query.offset !== undefined) {
         query = query.append('offset', this.requestData.query.offset.toString());
       }
-      if(this.requestData.query.limit) {
+      if(this.requestData.query.limit !== undefined) {
         query = query.append('limit', this.requestData.query.limit.toString());
       }
-      if(this.requestData.query.checksum){
+      if(this.requestData.query.checksum !== undefined){
         query = query.append('checksum', this.requestData.query.checksum)
       } 
-      if(this.requestData.query.lock) {
+      if(this.requestData.query.lock !== undefined) {
         query = query.append('lock', this.requestData.query.lock.toString());
       } 
-      if(this.requestData.query.force_null) {
+      if(this.requestData.query.force_null !== undefined) {
         query = query.append('force_null', this.requestData.query.force_null.toString())
       }
-      if(this.requestData.query.filter) {
+      if(this.requestData.query.filter !== undefined) {
         // TODO Loop through filters
         // query.set('filter', this.requestData.query.filter);
       }
+      return query;
     }
     else return null;
 
-    return query;
   }
 
   public getURL() {

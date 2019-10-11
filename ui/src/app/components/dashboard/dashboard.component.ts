@@ -6,6 +6,7 @@ import { WorkerService } from 'src/app/services/worker/worker.service';
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 import { RequestData } from 'src/app/models/request-data.model';
 import { User } from 'src/app/models/user.model';
+import { Page } from 'src/app/models/page.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,9 @@ export class DashboardComponent implements OnInit {
   alertType: string;
   alertMessage: string;
 
+  loginType: string;
+  loginMessage: string;
+
   conTest;
 
   activeColumns;
@@ -27,7 +31,11 @@ export class DashboardComponent implements OnInit {
 
   getButtonData;
   getAllButtonData;
-  postButtonData
+  postButtonData;
+
+  page: Page
+
+  public hide = true;
 
   constructor(
     private request: RequestService,
@@ -37,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.initActiveTable();
-    this.initInactiveTable();
+    // this.initInactiveTable();
     this.initTest();
   }
 
@@ -63,8 +71,13 @@ export class DashboardComponent implements OnInit {
   }
 
   initActiveTable() {
+    this.page = new Page(true);
     this.activeColumns = this.initActiveColumns();
     this.activeRows = this.initActiveRows();
+  }
+
+  setPage(event) {
+    console.log(event);
   }
 
   initInactiveTable() {
@@ -96,7 +109,9 @@ export class DashboardComponent implements OnInit {
 
   initActiveRows() {
     this.activeRows = [];
-    this.request.readUsers().subscribe(users => {
+    console.log(this.page)
+    this.request.readUsers(this.page.limit, this.page.offset).subscribe(users => {
+      this.page.count = users[0].length
       users[0].forEach(user => {
         if( user.hasOwnProperty('date-created') && user['date-created'].hasOwnProperty('$date') ){
           user['date-created'] = new Date(user['date-created']['$date']);
@@ -153,6 +168,7 @@ export class DashboardComponent implements OnInit {
     let updateRow = JSON.parse(JSON.stringify(this.activeRows[0]));
     updateRow['date-created'] = (new Date(updateRow['date-created'])).valueOf();
     updateRow['arbitrary-num']++
+
     let req = new RequestData();
     req.table = ({'g':'users'});
     req.body = updateRow;
@@ -164,5 +180,26 @@ export class DashboardComponent implements OnInit {
         this.initActiveTable();
       }
     })
+  }
+
+  testLogin(username, password){
+    this.request.login(username, password).subscribe({
+      next:  response => {
+        if(response.hasOwnProperty('success')) {
+          this.loginMessage = response.success
+          this.loginType = 'success';
+        }
+        else{
+          this.loginMessage = response.denied
+          this.loginType = 'warning';
+        }
+
+        console.log(response);
+      },
+      error: err=> {
+        this.loginMessage = "Something went wrong"
+        this.loginType = 'danger';
+      }
+    });
   }
 }

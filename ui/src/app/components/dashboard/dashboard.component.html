@@ -24,11 +24,46 @@
           <button mat-raised-button color="warn" (click)="updateFirst()">update First</button>
         </div>
       </div>
+      <div class="row">
+        <ng-template [ngIf]="loginMessage">
+          <alert [type]="loginType">{{ loginMessage }}</alert>
+        </ng-template>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <input matInput #userForm placeholder="Enter your username">
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <input matInput #passForm placeholder="Enter your password" [type]="hide ? 'password' : 'text'" >
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col">
+            <button mat-raised-button color="accent" (click)="testLogin(userForm.value, passForm.value)">Test Login</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-9">
       <mat-tab-group mat-align-tabs="center">
         <mat-tab label='Active Users'>
-          <ngx-datatable class="bootstrap" [rows]="activeRows" [columns]="activeColumns" [columnMode]="'force'">
+          <ngx-datatable class="bootstrap" 
+          [rows]="activeRows" 
+          [columns]="activeColumns" 
+          [columnMode]="'force'"
+          [externalPaging]="page.externalPaging"
+          [count]="page.count"
+          [offset]="page.offset"
+          [limit]="page.limit"
+          (page)='setPage($event)'
+          >
           </ngx-datatable>
         </mat-tab>
         <mat-tab label="Inactive Users">

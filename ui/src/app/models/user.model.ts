@@ -1,9 +1,7 @@
 export class User {
     '_id': string;
     'arbitrary-number': number;
-    'date-created': {
-        '$date': number
-    } | Date | number;
+    'date-created': Date | number;
     'password': string;
     'username': string;
     'status': number;

@@ -11,7 +11,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import play.modules.reactivemongo._
 
 // Reactive Mongo imports
-import reactivemongo.api.Cursor
+import reactivemongo.api.{Cursor, QueryOpts}
 
 // BSON-JSON conversions/collection
 import reactivemongo.play.json._, collection._
@@ -89,8 +89,8 @@ class GeneralController @Inject()(
     }
 
     // Return array
-    futureArray.map { list => 
-      Ok(list)
+    futureArray.map { arr => 
+      Ok(arr)
     }
   }
 
@@ -102,6 +102,7 @@ class GeneralController @Inject()(
     _.collection[JSONCollection](table))
 
     val query = Json.obj("status" -> Json.obj("$gt" -> 0) )
+    // val options = new QueryOpts(offset, limit)
 
     val cursor: Future[Cursor[JsObject]] = newCollection.map {
       _.find(query).cursor[JsObject]()
@@ -155,7 +156,7 @@ class GeneralController @Inject()(
     
     val selector = Json.obj("_id" -> Json.obj("$oid" -> id))
 
-    newCollection.flatMap(_.update( selector , reqBody).map { lastError =>
+    newCollection.flatMap(_.update(ordered = false).one(selector , reqBody).map { lastError =>
       Logger.debug(s"Successfully inserted with LastError: $lastError")
     })
 
@@ -181,7 +182,7 @@ class GeneralController @Inject()(
 /* Not used right now
 request.queryString.map { case (k,v) => k -> v.mkString }
 */
-  def buildQuery( queryMap: Map[String, String] ) = {
+  def buildQueryOptions( queryMap: Map[String, String] ) = {
     if( queryMap isEmpty ) { println("empty") }
     else {
       var jsonQuery = Json.obj("placeholder" -> JsNull)
@@ -197,6 +198,8 @@ request.queryString.map { case (k,v) => k -> v.mkString }
         case ("force_null", value)   => 
           jsonQuery = jsonQuery.as[JsObject] ++ Json.obj("force_null" -> value.toInt)
       }
+
+      // println(Json.prettyPrint(jsonQuery))
     }
   }
 }

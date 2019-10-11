@@ -73,7 +73,7 @@ export class CreateUserDialogComponent implements OnInit {
       this.user["arbitrary-num"] = Number(this.user["arbitrary-num"])
 
       console.log(this.user);
-      this.request.createSomething({'g':'users'}, this.user)
+      this.request.createUser(this.user)
       .subscribe({
         next: response => {
           this.disableSubmit = true;
@@ -84,7 +84,7 @@ export class CreateUserDialogComponent implements OnInit {
         error: err => {
           this.disableSubmit = true;
           console.log(err);
-          this.alertMessage = 'Something happened try again later';
+          this.alertMessage = err.error.message;
           this.alertType = 'danger';
         }
       })

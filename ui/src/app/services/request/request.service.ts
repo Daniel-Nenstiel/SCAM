@@ -48,10 +48,14 @@ export class RequestService extends BaseRequestService {
     return super.get(req);
   }
 
-  readUsers(): Observable<User[][]> {
+  readUsers(limit: number, offset: number): Observable<User[][]> {
     const req = new RequestData();
     req.table = Endpoints.GENERIC_USER_ENDPOINT
-
+    req.query = {
+      limit: limit,
+      offset: offset
+    }
+    
     return super.get<User[][]>(req);
   }
 
@@ -61,5 +65,24 @@ export class RequestService extends BaseRequestService {
 
   updateSomething(reqDat: RequestData){
     return super.put<any>(reqDat);
+  }
+
+  login(username: string, password: string): Observable<any> {
+    const req = new RequestData();
+    req.table = Endpoints.SPECIFIC_LOGIN_ENDPOINT
+    req.body = {
+      username: username,
+      password: password
+    }
+    
+    return super.put(req);
+  }
+
+  createUser(user: User): Observable<any> {
+    const req = new RequestData();
+    req.table = Endpoints.SPECIFIC_CREATE_USER;
+    req.body = user;
+
+    return super.post(req);
   }
 }
